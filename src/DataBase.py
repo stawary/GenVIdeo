@@ -10,9 +10,9 @@ import uuid
 
 class DataBase():
     def __init__(self):
-        self.host=""
+        self.host="127.0.0.1"
         self.user="root"
-        self.password=""
+        self.password="tuXIUjian@123"
         self.db="word"
         self.port=3306
 
@@ -21,7 +21,7 @@ class DataBase():
         连接数据库
         :return: conn，cursor
         '''
-        conn = pymysql.connect(self.host,self.user,self.password,self.db,self.port)
+        conn = pymysql.connect(host=self.host,user=self.user,password=self.password,database=self.db,port=self.port)
         cursor = conn.cursor()
         return conn,cursor
 
@@ -36,7 +36,7 @@ class DataBase():
         '''
         if(self.test_connect()):
             conn,cursor = self.connect()
-            sql="INSERT INTO `word` (`uuid`, `word`, `kind`, `time`, `status`) VALUES (%s,%s,%s,%s,%s)"
+            sql="INSERT INTO `word_copy` (`uuid`, `word`, `kind`, `time`, `status`) VALUES (%s,%s,%s,%s,%s)"
             try:
                 time=datetime.datetime.now()
                 cursor.execute(sql,(uuid,word,kind,str(time),'1'))
@@ -74,7 +74,7 @@ class DataBase():
         '''
         if(self.test_connect()):
             conn,cursor = self.connect()
-            sql = "select `uuid`,`word` from `word` where `status` = '1' limit 1"
+            sql = "select `uuid`,`word` from `word_copy` where `status` = '1' limit 1"
             try:
                 cursor.execute(sql)
                 result = cursor.fetchall()
@@ -102,7 +102,7 @@ class DataBase():
         '''
         if(self.test_connect()):
             conn,cursor = self.connect()
-            sql = "update `word` set `status` = 1 where uuid = %s"
+            sql = "update `word_copy` set `status` = 1 where uuid = %s"
             try:
                 cursor.execute(sql,(str(uuid)))
                 conn.commit()
@@ -117,5 +117,5 @@ class DataBase():
 
 if __name__ == '__main__':
 
-    #print(DataBase().insert_word('1','3月9日某某对某某作出指示','新闻'))
-    print(DataBase().test_connect())
+    print(DataBase().insert_word('2','3月9日某某对某某作出指示','新闻'))
+    # print(DataBase().test_connect())

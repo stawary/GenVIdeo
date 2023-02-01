@@ -6,19 +6,13 @@ import sys
 import json
 
 IS_PY3 = sys.version_info.major == 3
-if IS_PY3:
-    from urllib.request import urlopen
-    from urllib.request import Request
-    from urllib.error import URLError
-    from urllib.parse import urlencode
-    from urllib.parse import quote_plus
-else:
-    import urllib2
-    from urllib import quote_plus
-    from urllib2 import urlopen
-    from urllib2 import Request
-    from urllib2 import URLError
-    from urllib import urlencode
+
+from urllib.request import urlopen
+from urllib.request import Request
+from urllib.error import URLError
+from urllib.parse import urlencode
+from urllib.parse import quote_plus
+
 API_KEY = ''
 SECRET_KEY = ''
 
